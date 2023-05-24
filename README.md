@@ -1,7 +1,7 @@
 # Flover
 A novel temporal fusion framework for propelling autoregressive model inference by leveraging the temporality property of inferring generative tasks, delivering superior and more fine-grained parallelism beyond all current solutions.
 The code will be release at July.
-Please refer to [Arxiv](https://arxiv.org/abs/2305.13484) for details.
+Please refer to [arxiv](https://arxiv.org/abs/2305.13484) for details.
 
 **Structure**
 ![Example Image](images/Flover.png)
