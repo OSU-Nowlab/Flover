@@ -80,7 +80,7 @@ We currently provide a visualization terminal output.
 
 **Comparison with FT in constant request time interval**
 
-![Example Image](images/compare_in_fix_interval.png)
+![Example Image](images/result.png)
 ---
 
 
@@ -93,12 +93,18 @@ We currently provide a visualization terminal output.
 
 **Comparison with FT in random request output length (sampled from a uniform distribution)**
 
-![Example Image](images/compare_in_variable_length.png)
+Here we introduce memory reordering to make sure the memory of early finished requests is freed.
+
+![Example Image](images/mem_shuffle.png)
 ---
 
 
 
-**Working with tensor parallelism**
+**Hardware profiling with Nsight**
 
-![Example Image](images/compare_in_distributed.png)
+![Example Image](images/nsys_baseline.png)
+
+
+
+![Example Image](images/profiling.png)
 ---
