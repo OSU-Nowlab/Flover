@@ -74,6 +74,12 @@ mpirun -n 1 [node name] bin/test_flover
 ### Visualization of in-flight requests
 We currently provide a visualization terminal output. 
 
+## Updates Nov.7, 23
+We compare our work against the latest TensorRT-LLM on parallel inference multiple requests.
+![Example Image](images/TensorRT-LLM_vs._Flover_32_requests.png)
+![Example Image](images/TensorRT-LLM_vs._Flover_64_requests.png)
+![Example Image](images/TensorRT-LLM_vs._Flover_Mem._Usage.png)
+
 ## Structure
 ![Example Image](images/Flover.png)
 ---
@@ -101,9 +107,6 @@ Here we introduce memory reordering to make sure the memory of early finished re
 
 
 **Hardware profiling with Nsight**
-
-![Example Image](images/nsys_baseline.png)
-
 
 
 ![Example Image](images/profiling.png)
