@@ -21,12 +21,12 @@ private:
 
 public:
     ProgressBar(int total, int width = 50, int maxActives = 32, int thickness = 3) : 
-        total_iterations(total*2), bar_width(width*2), max_actives(maxActives), progress_bar_thickness(thickness), active_bars(width*2, 0), log_line1(6), log_line2(6) {
+        total_iterations(total*1.5), bar_width(width*2), max_actives(maxActives), progress_bar_thickness(thickness), active_bars(width*2, 0), log_line1(6), log_line2(6) {
         // Initial screen clear
         std::cout << "\033[2J\033[1;1H";  // ANSI escape codes to clear screen and move to top-left corner
     }
 
-    void update(int i, int actives, const std::string& logMessage = "") {
+    void update(int i, int actives, const std::string& logMessage = "", int req_id = 0) {
         int pos = (float)i / total_iterations * bar_width;
         
         // Position cursor to the beginning
@@ -53,7 +53,7 @@ public:
         active_bars[pos] = actives;
 
         // Actives title
-        std::cout << "\n# of In-flight requests " << "                                                                                               Incoming requests" << "                    Finished requests\n";
+        std::cout << "\n# of In-flight requests " << "                                                                                               Incoming requests" << "                      Finished requests\n";
 
         // Draw all active bars with y-axis labels
         for (int height = max_actives; height >= 0; --height) {  
@@ -73,10 +73,10 @@ public:
         std::cout << "> iters\n";
 
         if (logMessage == "request added...") {
-            std::cout << "\033[" << log_line1 << ";120H" << logMessage;  // Position cursor to log_line, column 60
+            std::cout << "\033[" << log_line1 << ";120H" << "request " << req_id << " added...";  // Position cursor to log_line, column 60
             log_line1++;
         } else if(logMessage == "request finished...") {
-            std::cout << "\033[" << log_line2 << ";157H" << logMessage;  // Position cursor to log_line, column 60
+            std::cout << "\033[" << log_line2 << ";159H" << "request " << req_id << " finished...";  // Position cursor to log_line, column 60
             log_line2++;
         }
 
@@ -311,7 +311,9 @@ void LlamaInference<T>::run(int* stop_flag,
 
     ProgressBar pb(1230);
     bool added_req = false;
+    int added_id = 0;
     bool removed_req = false;
+    int removed_id = 0;
 
     while (true) {
         InferenceInfo _req;
@@ -355,12 +357,14 @@ void LlamaInference<T>::run(int* stop_flag,
 
                 _req.mem_id                   -= high_id_offset;
                 
+                
                 InferenceInfo* heap_req       = new InferenceInfo(_req);
                 std::unique_ptr<InferenceInfo> ptr(heap_req);
                 InferenceStatus[_req.unique_task_id] = std::move(ptr);
 
                 mem_status_pre[_req.mem_id]   = _req.unique_task_id;
                 mem_status[_req.mem_id]       = _req.unique_task_id;
+                added_id = _req.unique_task_id;
                 if(_req.mem_id > cur_high_id) 
                     cur_high_id = _req.mem_id;
 
@@ -621,10 +625,10 @@ void LlamaInference<T>::run(int* stop_flag,
             total_iters += 1;
             // log("Rank ", tensor_para_.rank_, " Total iters ", total_iters, ", actives ", actives, ", working batch size ", running_batchsize * beam_width, ", cache ind ", src_indir_idx);
             if (added_req) {
-                pb.update(total_iters, actives, "request added...");
+                pb.update(total_iters, actives, "request added...", added_id);
                 added_req = false;
             } else if (removed_req) {
-                pb.update(total_iters, actives, "request finished...");
+                pb.update(total_iters, actives, "request finished...", removed_id);
                 removed_req = false;
             }
             else {
@@ -642,6 +646,7 @@ void LlamaInference<T>::run(int* stop_flag,
 
                 if(value->cur_step == value->defined_generation_len || value->cur_step >= value->total_seq_len){
                     removed_req = true;
+                    removed_id = key;
                     actives                          -=1;
                     // log("Request ", key, " reaches len ", value->cur_step);
                     if (value->mem_id == cur_low_id || value->mem_id == cur_high_id || use_mem_shuffle) {
@@ -807,7 +812,7 @@ void LlamaInference<T>::run(int* stop_flag,
     if (tensor_para_.rank_ == 0 && use_mem_shuffle) {
         // log("Total mem move: ", total_mem_move_amount);
     }
-    pb.update(total_iters, actives, "request finished...");
+    pb.update(total_iters, actives, "request finished...", removed_id);
     std::cout<<std::endl;
     std::cout.flush();
     std::cout<<std::endl;
