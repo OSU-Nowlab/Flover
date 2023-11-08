@@ -72,7 +72,7 @@ mpirun -n 1 [node name] bin/test_flover
 ```
 
 ### Visualization of in-flight requests
-We currently provide a visualization terminal output. 
+We currently provide a visualization terminal output. The following shows the inference progress of 32 requests, each with a random generation length, and the interval between requests is 500 ms.
 ![Example Image](images/inference_visuliazationpng.png)
 
 ## Updates Nov.7, 23
