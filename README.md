@@ -1,5 +1,5 @@
 # Flover
-A novel temporal fusion framework for propelling autoregressive model inference by leveraging the temporality property of inferring generative tasks, delivering superior and more fine-grained parallelism beyond all current solutions.
+A novel temporal fusion framework for propelling autoregressive model inference by leveraging the temporality property of inferring generative tasks (also known as in-flight batching, iteration batching, etc.), delivering superior and more fine-grained parallelism beyond all current solutions.
 The code is now available.
 Please refer to [arxiv](https://arxiv.org/abs/2305.13484) for details. Our paper is in the proceedings of 30th IEEE International Conference on High Performance Computing, Data, and Analytics (HiPC 23).
 
