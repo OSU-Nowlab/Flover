@@ -73,6 +73,7 @@ mpirun -n 1 [node name] bin/test_flover
 
 ### Visualization of in-flight requests
 We currently provide a visualization terminal output. 
+![Example Image](images/inference_visuliazationpng.png)
 
 ## Updates Nov.7, 23
 We compare our work against the latest TensorRT-LLM on parallel inference multiple requests.
