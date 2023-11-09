@@ -81,6 +81,10 @@ We compare our work against the latest TensorRT-LLM on parallel inference multip
 ![Example Image](images/TensorRT-LLM_vs._Flover_64_requests.png)
 ![Example Image](images/TensorRT-LLM_vs._Flover_Mem._Usage.png)
 
+## Results
+For detailed performance results, please also refer to our project [ParaInfer-X](http://hidl.cse.ohio-state.edu:8080/performance/parainfer-x/) at NOWLAB, OSU.
+
+---
 **Comparison with FT in constant request time interval**
 
 ![Example Image](images/result.png)
