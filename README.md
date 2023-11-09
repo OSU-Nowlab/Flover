@@ -76,13 +76,13 @@ We currently provide a visualization terminal output. The following shows the in
 ![Example Image](images/inference_visuliazationpng.png)
 
 ## Updates Nov.7, 23
-We compare our work against the latest TensorRT-LLM on parallel inference multiple requests.
+We compare our work against the latest TensorRT-LLM on parallel inference multiple requests. For detailed performance results, please also refer to our project [ParaInfer-X](http://hidl.cse.ohio-state.edu:8080/performance/parainfer-x/) at NOWLAB, OSU.
+
 ![Example Image](images/TensorRT-LLM_vs._Flover_32_requests.png)
 ![Example Image](images/TensorRT-LLM_vs._Flover_64_requests.png)
 ![Example Image](images/TensorRT-LLM_vs._Flover_Mem._Usage.png)
 
 ## Results
-For detailed performance results, please also refer to our project [ParaInfer-X](http://hidl.cse.ohio-state.edu:8080/performance/parainfer-x/) at NOWLAB, OSU.
 
 ---
 **Comparison with FT in constant request time interval**
